@@ -1,0 +1,20 @@
+# CPU-only torch: keeps the install ~200MB instead of pulling ~2.5GB of CUDA wheels.
+--extra-index-url https://download.pytorch.org/whl/cpu
+
+streamlit==1.63.0
+pandas==3.0.5
+numpy==2.5.3
+scikit-learn==1.9.1
+sentence-transformers==6.0.1
+faiss-cpu==1.15.0
+spacy==3.8.16
+pdfplumber==0.11.10
+plotly==7.0.0
+pyarrow==25.0.1
+torch==2.14.0+cpu
+
+# spaCy English model, pinned so deployments don't need a separate download step.
+en_core_web_sm @ https://github.com/explosion/spacy-models/releases/download/en_core_web_sm-3.8.0/en_core_web_sm-3.8.0-py3-none-any.whl
+
+# Dev
+pytest==9.1.1

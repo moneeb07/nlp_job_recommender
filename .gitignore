@@ -1,0 +1,26 @@
+# Environment
+venv/
+.venv/
+.env
+
+# Data and models (large, regenerated locally)
+data/
+models/
+
+# Personal notes and build guides
+git_ignore_files/
+
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+
+# Notebooks
+.ipynb_checkpoints/
+
+# Streamlit
+.streamlit/secrets.toml
+
+# OS
+.DS_Store
