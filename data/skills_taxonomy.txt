@@ -1,0 +1,486 @@
+# Skills taxonomy — one skill per line, lines starting with # are ignored.
+# Matched case-insensitively as token sequences by spaCy's PhraseMatcher,
+# so multi-word entries ("machine learning") are matched as whole phrases.
+
+# --- Programming languages ---
+# The bare entries "c", "r" and "go" were removed after measuring them against
+# the corpus: they matched "b/c", "Class C licence", "R&D" and "the go-to
+# person" far more often than the languages. The qualified forms below keep the
+# languages findable without the noise.
+c programming
+r programming
+go programming
+python
+java
+javascript
+typescript
+c++
+c#
+golang
+rust
+ruby
+php
+swift
+kotlin
+scala
+matlab
+perl
+haskell
+lua
+dart
+objective-c
+visual basic
+vba
+sql
+pl/sql
+t-sql
+bash
+shell scripting
+powershell
+assembly
+fortran
+cobol
+groovy
+julia
+elixir
+clojure
+erlang
+solidity
+
+# --- ML / DL frameworks and libraries ---
+tensorflow
+keras
+pytorch
+scikit-learn
+sklearn
+xgboost
+lightgbm
+catboost
+hugging face
+huggingface
+transformers
+spacy
+nltk
+gensim
+fastai
+mxnet
+caffe
+theano
+jax
+onnx
+opencv
+yolo
+detectron2
+mlflow
+weights & biases
+optuna
+ray
+sentence-transformers
+langchain
+llamaindex
+stable baselines
+statsmodels
+prophet
+imbalanced-learn
+shap
+lime
+dvc
+kubeflow
+sagemaker
+vertex ai
+
+# --- Common abbreviations (job postings rarely spell these out) ---
+ai
+artificial intelligence
+ml
+nlp
+llm
+llms
+genai
+rag
+cnn
+rnn
+api
+apis
+sdk
+eda
+mlops
+llmops
+ocr
+
+# --- ML / NLP concepts ---
+machine learning
+deep learning
+natural language processing
+computer vision
+reinforcement learning
+supervised learning
+unsupervised learning
+semi-supervised learning
+transfer learning
+neural networks
+artificial neural networks
+convolutional neural networks
+recurrent neural networks
+lstm
+gru
+attention mechanism
+bert
+gpt
+word2vec
+glove
+fasttext
+tf-idf
+bag of words
+n-grams
+tokenization
+lemmatization
+stemming
+named entity recognition
+part-of-speech tagging
+sentiment analysis
+text classification
+text mining
+topic modeling
+latent dirichlet allocation
+semantic search
+information retrieval
+question answering
+machine translation
+speech recognition
+text summarization
+word embeddings
+embeddings
+vector search
+feature engineering
+feature selection
+dimensionality reduction
+principal component analysis
+t-sne
+umap
+clustering
+k-means
+dbscan
+hierarchical clustering
+random forest
+decision trees
+gradient boosting
+support vector machines
+logistic regression
+linear regression
+naive bayes
+k-nearest neighbors
+ensemble learning
+cross-validation
+hyperparameter tuning
+regularization
+model evaluation
+model deployment
+a/b testing
+anomaly detection
+time series analysis
+forecasting
+recommender systems
+collaborative filtering
+content-based filtering
+generative ai
+large language models
+prompt engineering
+retrieval augmented generation
+fine-tuning
+gans
+generative adversarial networks
+autoencoders
+diffusion models
+object detection
+image segmentation
+image classification
+optical character recognition
+face recognition
+pose estimation
+explainable ai
+
+# --- Data tools and processing ---
+pandas
+numpy
+scipy
+matplotlib
+seaborn
+plotly
+bokeh
+altair
+dask
+polars
+pyspark
+apache spark
+hadoop
+hive
+kafka
+apache kafka
+airflow
+apache airflow
+dbt
+luigi
+prefect
+apache nifi
+apache flink
+apache beam
+snowflake
+databricks
+bigquery
+redshift
+athena
+talend
+informatica
+alteryx
+knime
+excel
+microsoft excel
+google sheets
+power query
+jupyter
+jupyter notebook
+google colab
+rstudio
+anaconda
+web scraping
+beautifulsoup
+scrapy
+selenium
+regular expressions
+
+# --- Business intelligence and visualisation ---
+tableau
+power bi
+looker
+qlik
+qlikview
+apache superset
+metabase
+grafana
+kibana
+google data studio
+sas
+spss
+stata
+d3.js
+dashboard development
+
+# --- Databases ---
+mysql
+postgresql
+postgres
+sqlite
+oracle
+sql server
+microsoft sql server
+mongodb
+cassandra
+redis
+elasticsearch
+neo4j
+dynamodb
+couchdb
+mariadb
+firebase
+firestore
+supabase
+influxdb
+clickhouse
+faiss
+pinecone
+weaviate
+milvus
+qdrant
+chroma
+vector database
+nosql
+database design
+data modeling
+etl
+elt
+data warehousing
+data lake
+query optimization
+stored procedures
+database normalization
+
+# --- Cloud platforms ---
+aws
+amazon web services
+azure
+microsoft azure
+gcp
+google cloud platform
+ec2
+s3
+aws lambda
+cloudformation
+ecs
+eks
+rds
+cloudwatch
+iam
+azure functions
+azure devops
+cloud run
+cloud functions
+compute engine
+cloud storage
+heroku
+digitalocean
+vercel
+netlify
+railway
+cloudflare
+hugging face spaces
+
+# --- DevOps and infrastructure ---
+docker
+kubernetes
+jenkins
+gitlab ci
+github actions
+circleci
+travis ci
+terraform
+ansible
+puppet
+vagrant
+helm
+prometheus
+splunk
+datadog
+new relic
+sentry
+elk stack
+ci/cd
+continuous integration
+continuous deployment
+infrastructure as code
+microservices
+serverless
+load balancing
+nginx
+apache
+linux
+unix
+ubuntu
+git
+github
+gitlab
+bitbucket
+jira
+confluence
+trello
+agile
+scrum
+kanban
+devops
+mlops
+site reliability engineering
+
+# --- Web and mobile frameworks ---
+react
+react.js
+angular
+vue
+vue.js
+svelte
+next.js
+nuxt.js
+gatsby
+node.js
+express
+express.js
+django
+flask
+fastapi
+ruby on rails
+laravel
+spring
+spring boot
+asp.net
+.net
+.net core
+graphql
+rest api
+restful api
+grpc
+websocket
+html
+css
+sass
+tailwind css
+bootstrap
+material ui
+jquery
+webpack
+vite
+babel
+redux
+streamlit
+gradio
+dash
+shiny
+flutter
+react native
+ionic
+xamarin
+android
+ios
+swiftui
+responsive design
+ui/ux design
+figma
+
+# --- Testing and quality ---
+pytest
+unittest
+jest
+mocha
+cypress
+playwright
+junit
+postman
+unit testing
+integration testing
+test driven development
+code review
+
+# --- Analytical and professional skills ---
+data analysis
+data visualization
+data cleaning
+data wrangling
+exploratory data analysis
+statistical analysis
+statistics
+probability
+linear algebra
+calculus
+optimization
+experimental design
+hypothesis testing
+business intelligence
+data mining
+predictive modeling
+quantitative analysis
+business analysis
+requirements gathering
+critical thinking
+problem solving
+analytical thinking
+communication
+technical writing
+documentation
+presentation skills
+stakeholder management
+project management
+team leadership
+collaboration
+mentoring
+research
+attention to detail
+time management
+adaptability

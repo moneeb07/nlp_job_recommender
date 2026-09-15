@@ -3,8 +3,12 @@ venv/
 .venv/
 .env
 
-# Data and models (large, regenerated locally)
-data/
+# Data and models (large, regenerated locally).
+# The skills taxonomy is hand-written source, not generated data, so it is tracked.
+# Git will not descend into an excluded directory, so exclude the contents
+# rather than the directory itself for the negation below to take effect.
+data/*
+!data/skills_taxonomy.txt
 models/
 
 # Personal notes and build guides
