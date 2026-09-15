@@ -62,6 +62,11 @@ def main() -> None:
         "dimension": int(vectors.shape[1]),
         "count": int(vectors.shape[0]),
         "built_at": datetime.now(timezone.utc).isoformat(timespec="seconds"),
+        # Recorded here so the benchmark can report offline build cost next to
+        # query latency without re-running the build.
+        "embed_seconds": round(embed_seconds, 1),
+        "index_seconds": round(index_seconds, 4),
+        "index_bytes": FAISS_INDEX_PATH.stat().st_size,
     }
     with open(JOBS_META_PATH, "wb") as handle:
         pickle.dump(metadata, handle)

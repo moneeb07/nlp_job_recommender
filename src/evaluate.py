@@ -12,6 +12,7 @@ runs the benchmark and the ablation and writes both to `results/`.
 
 import json
 import math
+import pickle
 import statistics
 import time
 
@@ -20,8 +21,10 @@ import pandas as pd
 from src.baseline_tfidf import TFIDFRecommender
 from src.build_eval_set import load_eval_set
 from src.config import (
+    JOBS_META_PATH,
     JOBS_PARQUET,
     RESULTS_DIR,
+    TFIDF_META_PATH,
     WEIGHT_EXPERIENCE,
     WEIGHT_SEMANTIC,
     WEIGHT_SKILL_OVERLAP,
@@ -338,6 +341,38 @@ _LIMITATIONS = (
 )
 
 
+def build_cost() -> list[tuple[str, str, str]]:
+    """One-off offline cost of each system, read from what the builders recorded.
+
+    Query latency alone understates a dense system: the index has to be built
+    before any query can be served at all.
+    """
+    rows = []
+
+    if TFIDF_META_PATH.exists():
+        meta = json.loads(TFIDF_META_PATH.read_text())
+        rows.append((
+            "TF-IDF baseline",
+            f"{meta['fit_seconds']:.1f} s (fit)",
+            f"{meta['artefact_bytes'] / 1e6:.1f} MB, "
+            f"{meta['vocabulary']:,}-term vocabulary",
+        ))
+
+    if JOBS_META_PATH.exists():
+        with open(JOBS_META_PATH, "rb") as handle:
+            meta = pickle.load(handle)
+        if "embed_seconds" in meta:
+            rows.append((
+                "Sentence-BERT + FAISS",
+                f"{meta['embed_seconds']:.1f} s (embed) "
+                f"+ {meta['index_seconds'] * 1000:.0f} ms (index)",
+                f"{meta['index_bytes'] / 1e6:.1f} MB, "
+                f"{meta['count']:,} × {meta['dimension']} vectors",
+            ))
+
+    return rows
+
+
 def benchmark_markdown(report: dict, eval_set: dict) -> str:
     metrics = [f"NDCG@{k}" for k in K_VALUES] + [f"P@{k}" for k in K_VALUES]
     metrics += [f"R@{k}" for k in K_VALUES] + ["MRR", "MAP"]
@@ -359,6 +394,20 @@ def benchmark_markdown(report: dict, eval_set: dict) -> str:
     for name, scores in report.items():
         row = " | ".join(f"{scores[metric]:.3f}" for metric in metrics)
         lines.append(f"| {name} | {row} | {scores['latency_ms']:.0f} ms |")
+
+    costs = build_cost()
+    if costs:
+        lines += [
+            "",
+            "## Offline build cost",
+            "",
+            "Query latency is only half the picture — a dense index has to be built "
+            "before it can serve anything. Measured when each artefact was built.",
+            "",
+            "| System | build time | artefact |",
+            "|---|---|---|",
+        ]
+        lines += [f"| {name} | {duration} | {artefact} |" for name, duration, artefact in costs]
 
     return "\n".join(lines) + "\n"
 

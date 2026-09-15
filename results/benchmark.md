@@ -13,6 +13,15 @@
 
 | System | NDCG@5 | NDCG@10 | NDCG@20 | P@5 | P@10 | P@20 | R@5 | R@10 | R@20 | MRR | MAP | latency |
 |---|---|---|---|---|---|---|---|---|---|---|---|---|
-| TF-IDF baseline | 0.290 | 0.329 | 0.370 | 0.124 | 0.080 | 0.055 | 0.328 | 0.445 | 0.580 | 0.356 | 0.278 | 10 ms |
-| Sentence-BERT (retrieval only) | 0.277 | 0.307 | 0.339 | 0.112 | 0.078 | 0.051 | 0.326 | 0.411 | 0.515 | 0.313 | 0.262 | 65 ms |
-| Sentence-BERT + re-ranking | 0.433 | 0.464 | 0.482 | 0.188 | 0.126 | 0.072 | 0.526 | 0.601 | 0.657 | 0.479 | 0.384 | 88 ms |
+| TF-IDF baseline | 0.290 | 0.329 | 0.370 | 0.124 | 0.080 | 0.055 | 0.328 | 0.445 | 0.580 | 0.356 | 0.278 | 4 ms |
+| Sentence-BERT (retrieval only) | 0.277 | 0.307 | 0.339 | 0.112 | 0.078 | 0.051 | 0.326 | 0.411 | 0.515 | 0.313 | 0.262 | 43 ms |
+| Sentence-BERT + re-ranking | 0.433 | 0.464 | 0.482 | 0.188 | 0.126 | 0.072 | 0.526 | 0.601 | 0.657 | 0.479 | 0.384 | 44 ms |
+
+## Offline build cost
+
+Query latency is only half the picture — a dense index has to be built before it can serve anything. Measured when each artefact was built.
+
+| System | build time | artefact |
+|---|---|---|
+| TF-IDF baseline | 1.9 s (fit) | 11.5 MB, 50,000-term vocabulary |
+| Sentence-BERT + FAISS | 194.4 s (embed) + 1 ms (index) | 7.7 MB, 5,000 × 384 vectors |

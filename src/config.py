@@ -20,6 +20,7 @@ FAISS_INDEX_PATH = MODELS_DIR / "jobs.faiss"
 JOBS_META_PATH = MODELS_DIR / "jobs_meta.pkl"
 TFIDF_VECTORIZER_PATH = MODELS_DIR / "tfidf_vectorizer.joblib"
 TFIDF_MATRIX_PATH = MODELS_DIR / "tfidf_matrix.joblib"
+TFIDF_META_PATH = MODELS_DIR / "tfidf_meta.json"
 
 SPACY_MODEL = "en_core_web_sm"
 EMBEDDING_MODEL = "all-MiniLM-L6-v2"

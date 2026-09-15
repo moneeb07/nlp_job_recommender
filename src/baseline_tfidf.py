@@ -31,6 +31,9 @@ forms only**. A resume saying "neural networks" and a posting saying "deep
 learning" share no terms, so they score zero against each other.
 """
 
+import json
+import time
+
 import joblib
 import numpy as np
 import pandas as pd
@@ -39,6 +42,7 @@ from sklearn.feature_extraction.text import TfidfVectorizer
 from src.config import (
     JOBS_PARQUET,
     TFIDF_MATRIX_PATH,
+    TFIDF_META_PATH,
     TFIDF_MAX_FEATURES,
     TFIDF_MIN_DF,
     TFIDF_NGRAM_RANGE,
@@ -188,8 +192,28 @@ class TFIDFRecommender:
 def build(text_column: str = "job_text_clean") -> TFIDFRecommender:
     """Fit the baseline over the processed corpus and persist it."""
     jobs = pd.read_parquet(JOBS_PARQUET, columns=[text_column])
+
+    started = time.perf_counter()
     model = TFIDFRecommender().fit(jobs[text_column].fillna("").tolist())
+    fit_seconds = time.perf_counter() - started
+
     model.save()
+
+    # Recorded so the benchmark can report offline build cost alongside the
+    # FAISS index without re-fitting.
+    TFIDF_META_PATH.write_text(
+        json.dumps(
+            {
+                "fit_seconds": round(fit_seconds, 1),
+                "vocabulary": int(model.matrix.shape[1]),
+                "non_zero": int(model.matrix.nnz),
+                "artefact_bytes": (
+                    TFIDF_VECTORIZER_PATH.stat().st_size + TFIDF_MATRIX_PATH.stat().st_size
+                ),
+            },
+            indent=2,
+        )
+    )
     return model
 
 
