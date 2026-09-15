@@ -140,6 +140,23 @@ class JobRecommender:
     def is_available(index_path=FAISS_INDEX_PATH, meta_path=JOBS_META_PATH) -> bool:
         return index_path.exists() and meta_path.exists()
 
+    def with_weights(self, semantic: float, skills: float, experience: float):
+        """A recommender using different re-ranking weights.
+
+        The index, job table and loaded model are shared rather than copied, so
+        this is cheap. Returning a new object instead of reassigning attributes
+        keeps the ablation and the UI from mutating an instance other callers
+        are holding.
+        """
+        return JobRecommender(
+            self.index,
+            self.jobs,
+            embedder=self.embedder,
+            weight_semantic=semantic,
+            weight_skills=skills,
+            weight_experience=experience,
+        )
+
     def retrieve(self, profile: dict, top_n: int = RETRIEVE_TOP_N) -> list[dict]:
         """Stage 1 — nearest postings by embedding similarity."""
         query_text = profile.get("profile_text") or get_profile_text(profile)
