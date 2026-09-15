@@ -191,3 +191,40 @@ def test_matcher_can_be_built_for_a_bare_pipeline(parser):
     doc = parser.nlp("We use Python and Power BI.")
 
     assert extract_skills(doc, matcher) == ["power bi", "python"]
+
+
+def test_job_titles_are_found_outside_technology(parser):
+    """The keyword list was tech-only, so a nursing CV extracted no titles at
+    all and had nothing but soft skills left to match on."""
+    text = (
+        "Sara Ahmed\n"
+        "EXPERIENCE\n"
+        "Registered Nurse - Shaukat Khanum Hospital, Mar 2021 - Present\n"
+        "Staff Nurse - Services Hospital, Jun 2018 - Feb 2021\n"
+    )
+    profile = parser.parse(text, today=TODAY)
+
+    assert "Registered Nurse" in profile["job_titles"]
+    assert "Staff Nurse" in profile["job_titles"]
+
+
+@pytest.mark.parametrize(
+    "line, expected",
+    [
+        ("Financial Analyst - Engro, Jan 2020 - Present", "Financial Analyst"),
+        ("Chef de Partie - Bistro, 2019 - 2021", "Chef de Partie"),
+        ("Attorney - Legal Aid, 2018 - 2020", "Attorney"),
+        ("Teacher - City School, 2017 - 2019", "Teacher"),
+    ],
+)
+def test_titles_across_sectors(parser, line, expected):
+    profile = parser.parse(f"EXPERIENCE\n{line}\n", today=TODAY)
+
+    assert expected in profile["job_titles"]
+
+
+def test_a_degree_line_is_not_a_job_title(parser):
+    # "BS Software Engineering" contains "engineer" but is education.
+    profile = parser.parse("EDUCATION\nBS Software Engineering, NUST, 2020\n", today=TODAY)
+
+    assert profile["job_titles"] == []

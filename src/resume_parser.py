@@ -76,10 +76,32 @@ _NOT_A_DEGREE_AFTER = {
     "sql", "azure", "visio", "project", "sharepoint", "dynamics", "windows",
 }
 
+# Role nouns used to spot a job title on a line. This list started out purely
+# technical, which silently cost every non-technical resume its job titles — a
+# nursing CV extracted none at all, leaving only soft skills to match on.
 _TITLE_KEYWORDS = {
+    # technology
     "engineer", "developer", "analyst", "scientist", "architect", "administrator",
+    "programmer", "strategist", "designer", "technologist",
+    # cross-sector
     "manager", "consultant", "intern", "internship", "researcher", "specialist",
-    "designer", "programmer", "director", "officer", "technician", "strategist",
+    "director", "officer", "technician", "coordinator", "supervisor", "associate",
+    "assistant", "representative", "executive", "agent", "advisor", "adviser",
+    "planner", "recruiter", "trainer", "instructor", "auditor", "controller",
+    "buyer", "inspector", "operator", "clerk", "secretary", "receptionist",
+    # healthcare
+    "nurse", "physician", "doctor", "surgeon", "pharmacist", "therapist",
+    "counselor", "counsellor", "practitioner", "paramedic", "dietitian",
+    "hygienist", "radiographer", "midwife", "veterinarian",
+    # finance, legal, education
+    "accountant", "bookkeeper", "actuary", "underwriter", "broker", "teller",
+    "attorney", "lawyer", "paralegal", "solicitor", "teacher", "professor",
+    "lecturer", "tutor", "librarian", "principal",
+    # trades, services, creative
+    "chef", "cook", "driver", "mechanic", "electrician", "plumber", "welder",
+    "machinist", "carpenter", "technician", "dispatcher", "cashier", "server",
+    "bartender", "editor", "writer", "journalist", "photographer", "translator",
+    "surveyor", "worker",
 }
 
 _MAX_EDUCATION_CHARS = 300
@@ -262,6 +284,10 @@ def _extract_job_titles(text: str) -> list[str]:
         # The keyword must be in the title itself, not merely somewhere on the
         # line: otherwise form labels like "Intern Name: Moneeb" are harvested.
         if not any(keyword in title.lower() for keyword in _TITLE_KEYWORDS):
+            continue
+
+        # "BS Software Engineering" contains "engineer" but is a degree, not a job.
+        if _find_degree(title):
             continue
 
         if title and len(title.split()) <= 5 and title not in titles:
