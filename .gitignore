@@ -28,3 +28,6 @@ __pycache__/
 
 # OS
 .DS_Store
+
+# Generated deployment bundle (built by src/prepare_deploy.py)
+deploy/
